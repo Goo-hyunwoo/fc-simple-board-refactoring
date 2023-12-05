@@ -41,7 +41,7 @@ public class BoardService {
 				.toList();
 		
 		var response = Pagination.<BoardDto>builder()
-				.data(data)
+				.list(data)
 				.page(entityList.getNumber())
 				.size(entityList.getSize())
 				.totalElements(entityList.getTotalElements())

@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import udm.pixo.board.basic_board.model.BoardDto;
 import udm.pixo.board.basic_board.model.BoardSaveRequest;
 import udm.pixo.board.basic_board.service.BoardService;
+import udm.pixo.board.common.Api;
 import udm.pixo.board.common.Pagination;
 
 @RestController
@@ -27,22 +28,24 @@ public class BoardApiController {
 	
 	
 	@PostMapping("/save")
-	public BoardDto create(
+	public Api<BoardDto> create(
 			@Valid
 			@RequestBody
 			BoardSaveRequest boardSaveRequest
 			) {
 		var entity = BoardDto.builder().boardName(boardSaveRequest.getBoardName()).status("CREATED").build();
 		var dto = boardService.create(entity);
-		return dto;
+		
+		return Api.success(dto);
 	}
 	
 	@GetMapping("/all")
-	public Pagination<BoardDto> getAll(
+	public Api<Pagination<BoardDto>> getAll(
 			@PageableDefault(page = 0, size = 2, sort = "id", direction = Sort.Direction.DESC)
 			Pageable pageable
 			) {
-		return boardService.getAll(pageable);
+		var data = boardService.getAll(pageable);
+		return Api.success(data);
 	}
 	
 	@DeleteMapping("/delete/{id}")

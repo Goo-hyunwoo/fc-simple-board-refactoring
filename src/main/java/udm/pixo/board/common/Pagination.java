@@ -16,7 +16,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Builder
 public class Pagination<T> {
-	private List<T> data;
+	private List<T> list;
     private Integer page;
     private Integer size;
     private Integer currentElements;
